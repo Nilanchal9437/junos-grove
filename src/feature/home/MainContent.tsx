@@ -41,7 +41,7 @@ const MainContent: React.FC = () => {
             border-2 border-green-500 rounded-[30px]
             transition-all duration-300 
             shadow-[0_0_15px_rgba(34,197,94,0.2)] 
-            hover:shadow-[0_0_25px_rgba(34,197,94,0.4)]"
+            hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] pointer-events-auto"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
