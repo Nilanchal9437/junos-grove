@@ -1,148 +1,135 @@
 "use client";
 
-import React from "react";
-import { motion } from 'framer-motion';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+
+interface MapPoint {
+  id: number;
+  x: number;
+  y: number;
+  type: 'start' | 'checkpoint' | 'end';
+  content?: {
+    title: string;
+    description: string;
+  };
+}
 
 const TreasureMap: React.FC = () => {
-  const pathVariants = {
-    hidden: { pathLength: 0, opacity: 0 },
-    visible: {
-      pathLength: 1,
-      opacity: 1,
-      transition: {
-        duration: 2,
-        ease: "easeInOut"
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState<MapPoint | null>(null);
+
+  const mapPoints: MapPoint[] = [
+    {
+      id: 1,
+      x: 20,
+      y: 60,
+      type: 'start',
+      content: {
+        title: 'Starting Point',
+        description: 'Begin your journey here'
+      }
+    },
+    {
+      id: 2,
+      x: 40,
+      y: 50,
+      type: 'checkpoint',
+      content: {
+        title: 'Checkpoint',
+        description: 'These little circles are like what the user holds crypto currency wise and it just has the image of what they hold example solana and its logo on the image, and as the hover over it shows how much the hold and the price details of the coins and such.'
+      }
+    },
+    {
+      id: 3,
+      x: 80,
+      y: 20,
+      type: 'end',
+      content: {
+        title: 'Temple',
+        description: 'The final destination'
       }
     }
-  };
+  ];
 
   return (
-    <div className="treasure-map-container">
-      <style jsx>{`
-        .treasure-map-container svg {
-          shape-rendering: crispEdges;
-        }
-        .treasure-map-container svg path {
-          stroke: none !important;
-          shape-rendering: crispEdges;
-        }
-      `}</style>
-      <div className="min-h-screen bg-[#0a2614] flex items-center justify-center p-4">
-        <motion.div 
-          className="relative w-full max-w-4xl"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+    <div className="min-h-screen bg-[url('/treasure-map.jpg')] bg-cover bg-no-repeat bg-center relative overflow-hidden">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-[#0a2614]/40" />
+
+      {/* Dropdown Menu Button */}
+      <div className="absolute top-8 right-8 z-30">
+        <motion.button
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          className="text-white/90 hover:text-white transition-colors relative"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <svg 
-            className="w-full h-full" 
-            viewBox="0 0 1074 602" 
-            preserveAspectRatio="xMidYMid meet"
-            style={{ 
-              filter: 'drop-shadow(0 0 20px rgba(0,0,0,0.5))',
-              background: 'transparent'
-            }}
-          >
-            {/* Map background */}
-            <motion.path
-              fill="#c4a853"
-              d="M824.000000,1.000000 
-                C867.687561,1.000000 911.375122,1.000000 955.582031,1.362817 
-                C958.400879,7.150348 960.700439,12.575061 963.000000,18.333101 
-                C963.000000,19.110861 963.000000,19.555294 962.652954,20.049572"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-            />
+          <div className="flex flex-col items-end gap-1.5">
+            <div className="w-6 h-0.5 bg-current rounded-full" />
+            <div className="w-4 h-0.5 bg-current rounded-full" />
+            <div className="w-6 h-0.5 bg-current rounded-full" />
+          </div>
+        </motion.button>
 
-            {/* Glowing path */}
-            <motion.path
-              d="M100 300 
-                 C200 300, 250 250, 300 230
-                 C350 210, 400 200, 450 180
-                 C500 160, 550 150, 600 100"
-              fill="none"
-              stroke="#f3d03e"
-              strokeWidth="6"
-              strokeDasharray="15,15"
-              strokeLinecap="round"
-              className="drop-shadow-[0_0_8px_rgba(243,208,62,0.8)]"
-              variants={pathVariants}
-              initial="hidden"
-              animate="visible"
-            />
-
-            {/* Glowing dots */}
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <motion.g
-                key={i}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.3 * i, duration: 0.3 }}
-              >
-                <circle
-                  cx={100 + i * 100}
-                  cy={300 - i * 40}
-                  r="6"
-                  fill="#f3d03e"
-                  className="animate-pulse drop-shadow-[0_0_8px_rgba(243,208,62,0.8)]"
-                />
-              </motion.g>
-            ))}
-
-            {/* X mark */}
-            <motion.path
-              d="M80 290 L120 310 M120 290 L80 310"
-              stroke="#8b4513"
-              strokeWidth="8"
-              strokeLinecap="round"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-            />
-
-            {/* Detailed pyramid */}
-            <motion.g
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1.5 }}
+        {/* Dropdown Menu */}
+        <AnimatePresence>
+          {isDropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute top-full right-0 mt-2 w-48 bg-[#011A07]/90 backdrop-blur-sm rounded-lg shadow-xl"
             >
-              <path
-                d="M580 80 L660 80 L620 20 Z"
-                fill="#8b4513"
-              />
-              <path
-                d="M590 70 L650 70 L620 30 Z"
-                fill="#a0522d"
-              />
-              <path
-                d="M600 60 L640 60 L620 40 Z"
-                fill="#b8860b"
-              />
-            </motion.g>
-
-            {/* Map overlay gradient */}
-            <motion.rect
-              x="0"
-              y="0"
-              width="100%"
-              height="100%"
-              fill="url(#mapGradient)"
-              opacity="0.2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.2 }}
-            />
-
-            {/* Gradient definitions */}
-            <defs>
-              <radialGradient id="mapGradient" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="transparent" />
-                <stop offset="100%" stopColor="#8b7424" />
-              </radialGradient>
-            </defs>
-          </svg>
-        </motion.div>
+              <div className="py-2">
+                <Link
+                  href="/"
+                  className="block px-4 py-2 text-white/90 hover:bg-white/10 transition-colors"
+                >
+                  Home
+                </Link>
+                <Link
+                  href="/junos-grove"
+                  className="block px-4 py-2 text-white/90 hover:bg-white/10 transition-colors"
+                >
+                  Juno's grove
+                </Link>
+                <Link
+                  href="/watchtower"
+                  className="block px-4 py-2 text-white/90 hover:bg-white/10 transition-colors"
+                >
+                  Watch tower
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Title */}
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-20 text-4xl text-white text-center pt-8 font-bold"
+      >
+        Map
+      </motion.h1> 
+
+      {/* Back to Trail Link */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="absolute bottom-8 left-8 z-20"
+      >
+        <Link
+          href="/"
+          className="text-white/70 hover:text-white/90 transition-colors flex items-center gap-2"
+        >
+          <span>←</span>
+          <span>Back to Trail (Home)</span>
+        </Link>
+      </motion.div>
     </div>
   );
 };
