@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { GiJungle, GiTreasureMap } from "react-icons/gi";
-import { NavButton } from './NavigationButtons';
+import { NavButton } from '@/feature/home/NavigationButtons';
 
 const MainContent: React.FC = () => {
   return (
