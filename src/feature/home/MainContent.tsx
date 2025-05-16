@@ -51,13 +51,13 @@ const MainContent: React.FC = () => {
         href="/junos-grove"
         text="Juno's Grove"
         icon={<GiJungle className="w-5 h-5" />}
-        className="pointer-events-auto absolute top-[60%] right-16"
+        className="pointer-events-auto absolute top-[60%] right-40"
       />
       <NavButton
         href="/treasure-map"
         text="Treasure Map"
         icon={<GiTreasureMap className="w-6 h-6" />}
-        className="pointer-events-auto transform absolute top-[90%] left-[5%]"
+        className="pointer-events-auto transform absolute top-[70%] left-[5%]"
       />
     </motion.div>
   );
