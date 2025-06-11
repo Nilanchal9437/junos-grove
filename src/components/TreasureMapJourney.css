@@ -1,0 +1,136 @@
+.timeline-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  overflow: hidden;
+  background-color:rgba(2, 2, 0, 1);
+  padding: 2rem 0;
+}
+
+.jungle-bg {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  z-index: 0;
+}
+
+.jungle-bg.left {
+  left: 0;
+}
+
+.jungle-bg.right {
+  right: 0;
+}
+
+.timeline-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  margin-top: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-header h2 {
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  font-family: 'DM Sans', sans-serif;
+}
+.timeline-header p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.timeline-wrapper {
+  position: relative;
+  width: 80%;
+  height: 10px;
+  margin: 5rem auto;
+  margin-top: 10rem;
+}
+
+.line-base {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color:transparent;
+  border-radius: 2px;
+}
+
+.line-fill {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background-color: #043906;
+  border-radius: 2px;
+  transform: scaleX(0);
+    transition: transform 0.5s;
+  transform-origin: left center;
+}
+
+.checkpoints {
+  position: absolute;
+  width: 100%;
+  top: -15px;
+}
+
+.checkpoint-container {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkpoint {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(40, 180, 70, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    transform: scale(0.5);
+  opacity: 0;
+  transition: all 0.3s;
+  box-shadow: 0 0 0 4px rgba(34, 89, 8, 0.3);
+}
+
+.checkpoint .year {
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.checkpoint-text {
+  position: absolute;
+  width: 200px;
+  padding: 0.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(72, 255, 145, 1);
+  background-color: transparent;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.checkpoint-text.top {
+  bottom: 40px;
+}
+
+.checkpoint-text.bottom {
+  top: 40px;
+}
